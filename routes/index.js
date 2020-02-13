@@ -9,6 +9,15 @@ router.get('/videos', (req, res, next) => {
     .catch(error => res.send(error));
 })
 
+router.get('/videos/:id', (req, res, next) => {
+  const id = req.params.id;
+  const _id = ObjectID(id);
+
+  req.collection.findOne({_id})
+    .then(result => res.json(result))
+    .catch(error => {res.send(error)})
+})
+
 router.post('/videos', (req, res, next) => {
   const { url, tags } = req.body;
   if (!url || !tags ) {
